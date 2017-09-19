@@ -1,6 +1,8 @@
+///<reference path="../../node_modules/@angular/forms/src/validators.d.ts"/>
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
+import {CustomValidators} from './custom-validators';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,7 @@ export class AppComponent implements OnInit {
   genders = ['male', 'female'];
   signUpForm: FormGroup;
   forbiddenUsernames = ['Chris', 'Anna'];
+  projectInfo: FormGroup;
 
 
   ngOnInit() {
@@ -23,18 +26,29 @@ export class AppComponent implements OnInit {
       hobbies: new FormArray([])
     });
     this.signUpForm.setValue({
-      userData : {
-        username : 'Max',
-        email : 'test@test'
+      userData: {
+        username: 'Max',
+        email: 'test@test'
       },
-      gender : 'male',
-      hobbies : []
+      gender: 'male',
+      hobbies: []
     });
 
     this.signUpForm.patchValue({
-      userData : {
-        username : 'Anna'
+      userData: {
+        username: 'Anna'
       }
+    });
+
+
+    this.projectInfo = new FormGroup({
+      projectName: new FormControl(
+        null,
+        [Validators.required, CustomValidators.invalidProjectName],
+        CustomValidators.forbiddenProjectName
+      ),
+      mail: new FormControl(null, [Validators.required, Validators.email]),
+      status: new FormControl('stable')
     });
   }
 
@@ -65,5 +79,10 @@ export class AppComponent implements OnInit {
         }
       }, 1500);
     });
+  }
+
+  onProjectSubmitted() {
+    console.log(this.projectInfo.value);
+    this.projectInfo.reset();
   }
 }

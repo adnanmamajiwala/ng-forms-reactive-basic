@@ -13,7 +13,8 @@
             <span
               *ngIf="!signUpForm.get('userData.username').valid && signUpForm.get('userData.username').touched"
               class="help-block">
-              <span *ngIf="signUpForm.get('userData.username').errors['nameIsForbidden']">This is not a valid name</span>
+              <span
+                *ngIf="signUpForm.get('userData.username').errors['nameIsForbidden']">This is not a valid name</span>
               <span *ngIf="signUpForm.get('userData.username').errors['required']">Please enter a valid username!</span>
             </span>
           </div>
@@ -47,9 +48,10 @@
           <button
             class="btn btn-default"
             type="button"
-            (click)="onAddHobby()">Add Hobby</button>
+            (click)="onAddHobby()">Add Hobby
+          </button>
           <div class="form-group"
-            *ngFor="let hobbyControl of signUpForm.get('hobbies').controls; let i = index">
+               *ngFor="let hobbyControl of signUpForm.get('hobbies').controls; let i = index">
             <input type="text" class="form-control" [formControlName]="i">
           </div>
         </div>
@@ -60,4 +62,52 @@
       </form>
     </div>
   </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <h3>Assignment : </h3>
+
+      <form [formGroup]="projectInfo" (ngSubmit)="onProjectSubmitted()">
+        <div class="form-group">
+          <label for="projectName">Project Name</label>
+          <input
+            id="projectName"
+            name="projectName"
+            type="text"
+            class="form-control"
+            formControlName="projectName">
+          <span
+            *ngIf="!projectInfo.get('mail').valid && projectInfo.get('mail').touched"
+            class="help-block">Enter valid project name</span>
+        </div>
+        <div class="form-group">
+          <label for="mail">Email</label>
+          <input
+            id="mail"
+            name="mail"
+            type="text"
+            class="form-control"
+            formControlName="mail">
+        </div>
+        <div class="form-group">
+          <label for="status">Project Status</label>
+          <select
+            class="form-control"
+            name="status"
+            id="status"
+            formControlName="status">
+            <option value="stable">Stable</option>
+            <option value="critical">Critical</option>
+            <option value="finished">Finished</option>
+          </select>
+        </div>
+
+        <button
+          class="btn btn-primary">Submit Project Info</button>
+      </form>
+
+    </div>
+  </div>
+
+
 </div>
